@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: synapse
+spec:
+  selector:
+    matchLabels:
+      app: synapse
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: synapse
+    spec:
+      containers:
+      - image: matrixdotorg/synapse:v1.25.0
+        name: synapse
+        args: ["generate"]
+        env:
+        - name: SYNAPSE_SERVER_NAME
+          value: "example.com"
+        - name: SYNAPSE_REPORT_STATS
+          value: "yes"
+        volumeMounts:
+        - name: data
+          mountPath: /data
+        ports:
+          - containerPort: 8008
+      volumes:
+      - name: data
+        persistentVolumeClaim:
+          claimName: synapse-pv-claim
