@@ -5,7 +5,7 @@ metadata:
   namespace: synapse
   labels:
     app: postgres
-data:
+data: 
   POSTGRES_DB: synapse
   POSTGRES_USER: synapse-db
   POSTGRES_PASSWORD: r#aTXS7Zfx$9wDr

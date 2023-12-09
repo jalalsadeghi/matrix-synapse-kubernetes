@@ -1,6 +1,5 @@
-#Configuration file for Synapse.
-
-server_name: "nitawave.com"
+server_name: "min-wave.com"
+public_baseurl: "https://matrix.min-wave.com"
 pid_file: /data/homeserver.pid
 listeners:
   - port: 8008
@@ -10,30 +9,21 @@ listeners:
     resources:
       - names: [client, federation]
         compress: false
-public_baseurl: "matrix.nitawave.com"
 database:
   name: psycopg2
   args:
     user: synapse-db
-    password: SmFzMTIzIUAj
+    password: r#aTXS7Zfx$9wDr
     database: synapse
     host: postgres-service
     cp_min: 5
     cp_max: 10
-#database:
-#  name: sqlite3
-#  args:
-#    database: /data/homeserver.db
-log_config: "/data/nitawave.com.log.config"
+log_config: "/data/min-wave.com.log.config"
 media_store_path: /data/media_store
-registration_shared_secret: "Sd=pu*BEjmc:Gq~j.i9OfO1MFHkh~^:,bDAvzffF8BIt@SR*Hd"
+registration_shared_secret: "&5eoj^H86.w1la-sh#4T2R8Z8^iPB8zATAc^NitLzt-Hc_D.ns"
 report_stats: true
-macaroon_secret_key: "w&VAO0gZd*ZO7mHGcmp5rT5McXRE*6jeud2;Kx=_uKJOp6.Qh."
-form_secret: "O-^.@_jr3ln,pj9cv^.jCzk#lE#eIrtx8lq=.&.mPCUzZ0G**#"
-signing_key_path: "/data/nitawave.com.signing.key"
+macaroon_secret_key: "H=LWFD31eml6G7*Almq,zbx.QOW_uOkJwwYsg;93vFDFHo~DSP"
+form_secret: "Z;J#up.YsL,n_*3W99K5s^0tfq4nqomx:b7WAlM;@4564ZJl6g"
+signing_key_path: "/data/min-wave.com.signing.key"
 trusted_key_servers:
   - server_name: "matrix.org"
-
-
-# vim:ft=yaml
-

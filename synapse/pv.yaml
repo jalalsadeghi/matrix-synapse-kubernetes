@@ -9,10 +9,10 @@ spec:
   capacity:
     storage: 50Gi
   accessModes:
-   - ReadWriteOnce
+    - ReadWriteOnce
   persistentVolumeReclaimPolicy: Retain
   hostPath:
-  path: /etc/matrix/synapse/data
+    path: /etc/matrix/synapse/data
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
