@@ -28,4 +28,4 @@ spec:
       storage: 30Gi
   selector:
     matchLabels:
-      pvc_type:  postgres-pv
+      pvc_type: postgres-pv
