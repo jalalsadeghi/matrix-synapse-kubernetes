@@ -28,4 +28,4 @@ spec:
       storage: 50Gi
   selector:
     matchLabels:
-      pvc_type:  synapse-pv
+      pvc_type: synapse-pv
