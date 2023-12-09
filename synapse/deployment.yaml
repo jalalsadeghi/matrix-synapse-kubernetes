@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: synapse
+  namespace: synapse
 spec:
   selector:
     matchLabels:
@@ -14,14 +15,14 @@ spec:
         app: synapse
     spec:
       containers:
-      - image: matrixdotorg/synapse:v1.25.0
+      - image: matrixdotorg/synapse:v1.97.0
         name: synapse
-        args: ["generate"]
-        env:
-        - name: SYNAPSE_SERVER_NAME
-          value: "example.com"
-        - name: SYNAPSE_REPORT_STATS
-          value: "yes"
+        # args: ["generate"]
+        # env:
+        # - name: SYNAPSE_SERVER_NAME
+        #   value: "min-wave.com"
+        # - name: SYNAPSE_REPORT_STATS
+        #   value: "yes"
         volumeMounts:
         - name: data
           mountPath: /data

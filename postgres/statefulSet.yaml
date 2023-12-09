@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: StatefulSet
 metadata:
   name: postgres-statefulset
+  namespace: synapse
   labels:
     app: postgres
 spec:

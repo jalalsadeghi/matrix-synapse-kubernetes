@@ -10,7 +10,7 @@ nano postgres/configMap.yaml
 
 ```
 #Deploys the ConfigMap
-kubectl apply -f configMap.yaml
+sta configMap.yaml
 #Deploys the PersistentVolume
 kubectl apply -f pv.yaml
 #Deploys the StatefulSet
@@ -20,15 +20,26 @@ kubectl apply -f service.yaml
 ```
 
 ```
+kubectl apply -f pv.yaml
+kubectl apply -f deployment.yaml
+```
+
+
+```
 kubectl get Configmap
 kubectl get statefulset
 kubectl get pv
 kubectl get service
+kubectl get deployment
+kubectl get ingress
 ```
-
 ```
-kubectl apply -f pv.yaml
-kubectl apply -f deployment.yaml
+kubectl delete Configmap
+kubectl delete statefulset
+kubectl delete pv
+kubectl delete service
+kubectl delete deployment
+kubectl delete ingress
 ```
 
 Next delete the section database: and remove the beginning # for the example Postgres section. Here we now fill in the Database connection details. The section should look like
@@ -52,4 +63,10 @@ env:
     value: "example.com"
 - name: SYNAPSE_REPORT_STATS
     value: "yes"
+```
+
+```
+sudo certbot certonly --standalone --preferred-challenges http -d min-wave.com
+
+kubectl create secret tls min-wave-tls-secret --cert=/etc/letsencrypt/live/min-wave.com/fullchain.pem --key=/etc/letsencrypt/live/min-wave.com/privkey.pem
 ```

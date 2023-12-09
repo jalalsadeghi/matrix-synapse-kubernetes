@@ -2,10 +2,11 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: postgres-configuration
+  namespace: synapse
   labels:
     app: postgres
 data:
   POSTGRES_DB: synapse
   POSTGRES_USER: synapse-db
-  POSTGRES_PASSWORD: {CHANGEME}
+  POSTGRES_PASSWORD: r#aTXS7Zfx$9wDr
   POSTGRES_INITDB_ARGS: "--locale=C --encoding=UTF-8"

@@ -1,21 +1,22 @@
-apiVersion: extensions/v1beta1
+apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: synapse-nginx
-  annotations:
-    #This defines the maximum uploadable filesize for Media.
-    #"max_upload_size" also needs to be adjusted inside homeserver.yaml
-    nginx.ingress.kubernetes.io/proxy-body-size: 100M
+  namespace: synapse
 spec:
+  ingressClassName: nginx
+  tls:
+  - hosts:
+    - matrix.min-wave.com
+    secretName: matrix-min-wave-tls
   rules:
-  - host: matrix.example.com
+  - host: matrix.min-wave.com
     http:
       paths:
       - path: /
+        pathType: Prefix
         backend:
-          serviceName: synapse-service
-          servicePort: 8008
-  tls:
-  - hosts:
-    - matrix.example.com
-    secretName: example.com
+          service:
+            name: synapse-service
+            port:
+              number: 8008

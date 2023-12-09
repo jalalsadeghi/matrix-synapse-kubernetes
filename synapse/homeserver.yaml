@@ -1,0 +1,39 @@
+#Configuration file for Synapse.
+
+server_name: "nitawave.com"
+pid_file: /data/homeserver.pid
+listeners:
+  - port: 8008
+    tls: false
+    type: http
+    x_forwarded: true
+    resources:
+      - names: [client, federation]
+        compress: false
+public_baseurl: "matrix.nitawave.com"
+database:
+  name: psycopg2
+  args:
+    user: synapse-db
+    password: SmFzMTIzIUAj
+    database: synapse
+    host: postgres-service
+    cp_min: 5
+    cp_max: 10
+#database:
+#  name: sqlite3
+#  args:
+#    database: /data/homeserver.db
+log_config: "/data/nitawave.com.log.config"
+media_store_path: /data/media_store
+registration_shared_secret: "Sd=pu*BEjmc:Gq~j.i9OfO1MFHkh~^:,bDAvzffF8BIt@SR*Hd"
+report_stats: true
+macaroon_secret_key: "w&VAO0gZd*ZO7mHGcmp5rT5McXRE*6jeud2;Kx=_uKJOp6.Qh."
+form_secret: "O-^.@_jr3ln,pj9cv^.jCzk#lE#eIrtx8lq=.&.mPCUzZ0G**#"
+signing_key_path: "/data/nitawave.com.signing.key"
+trusted_key_servers:
+  - server_name: "matrix.org"
+
+
+# vim:ft=yaml
+
