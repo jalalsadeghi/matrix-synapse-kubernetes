@@ -6,6 +6,7 @@ metadata:
   labels:
     pvc_type: synapse-pv
 spec:
+  storageClassName: manual
   capacity:
     storage: 50Gi
   accessModes:
@@ -20,12 +21,13 @@ metadata:
   name: synapse-pv-claim
   namespace: synapse
 spec:
+  storageClassName: manual
   accessModes:
     - ReadWriteOnce
-  volumeMode: Filesystem
+#  volumeMode: Filesystem
   resources:
     requests:
       storage: 50Gi
-  selector:
-    matchLabels:
-      pvc_type: synapse-pv
+  # selector:
+  #   matchLabels:
+  #     pvc_type: synapse-pv
