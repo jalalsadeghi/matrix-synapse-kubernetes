@@ -2,7 +2,7 @@ server_name: "min-wave.com"
 public_baseurl: "https://matrix.min-wave.com"
 pid_file: /data/homeserver.pid
 listeners:
-  - port: 8008
+  - port: 80
     tls: false
     type: http
     x_forwarded: true

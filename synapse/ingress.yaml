@@ -19,4 +19,4 @@ spec:
           service:
             name: synapse-service
             port:
-              number: 8008
+              number: 80

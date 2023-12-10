@@ -9,9 +9,9 @@ spec:
   clusterIP: None
   ports:
   - name: http
-    port: 8008
+    port: 80
     protocol: TCP
-    targetPort: 8008
+    targetPort: 80
   selector:
     app: synapse
   type: ClusterIP
