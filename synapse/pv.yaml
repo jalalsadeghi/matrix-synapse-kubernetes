@@ -24,7 +24,7 @@ spec:
   storageClassName: manual
   accessModes:
     - ReadWriteOnce
-#  volumeMode: Filesystem
+  volumeMode: Filesystem
   resources:
     requests:
       storage: 50Gi
