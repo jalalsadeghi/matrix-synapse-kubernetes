@@ -4,7 +4,7 @@ metadata:
   name: synapse-nginx
   namespace: synapse
 spec:
-  ingressClassName: nginx
+  ingressClassName: ingress-nginx
   tls:
   - hosts:
     - matrix.min-wave.com
