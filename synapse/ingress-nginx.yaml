@@ -2,7 +2,7 @@ apiVersion: helm.cattle.io/v1
 kind: HelmChart
 metadata:
   name: ingress-nginx
-  namespace: synapse
+  namespace: kube-system
 spec:
   chart: ingress-nginx
   repo: https://kubernetes.github.io/ingress-nginx
