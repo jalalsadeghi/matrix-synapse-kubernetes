@@ -17,12 +17,12 @@ spec:
       containers:
       - image: matrixdotorg/synapse:v1.97.0
         name: synapse
-        args: ["generate"]
-        env:
-        - name: SYNAPSE_SERVER_NAME
-          value: "min-wave.com"
-        - name: SYNAPSE_REPORT_STATS
-          value: "yes"
+        # args: ["generate"]
+        # env:
+        # - name: SYNAPSE_SERVER_NAME
+        #   value: "min-wave.com"
+        # - name: SYNAPSE_REPORT_STATS
+        #   value: "yes"
         volumeMounts:
         - name: data
           mountPath: /data
