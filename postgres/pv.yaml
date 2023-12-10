@@ -6,6 +6,7 @@ metadata:
   labels:
     pvc_type: postgres-pv
 spec:
+  storageClassName: manual
   capacity:
     storage: 30Gi
   accessModes:
@@ -20,12 +21,13 @@ metadata:
   name: postgres-pv-claim
   namespace: synapse
 spec:
+  storageClassName: manual
   accessModes:
     - ReadWriteOnce
-  volumeMode: Filesystem
+#  volumeMode: Filesystem
   resources:
     requests:
       storage: 30Gi
-  selector:
-    matchLabels:
-      pvc_type: postgres-pv
+  # selector:
+  #   matchLabels:
+  #     pvc_type: postgres-pv
