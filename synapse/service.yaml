@@ -6,7 +6,6 @@ metadata:
   labels:
     app: synapse
 spec:
-  clusterIP: None
   ports:
   - name: http
     port: 80
@@ -15,3 +14,4 @@ spec:
   selector:
     app: synapse
   type: ClusterIP
+  clusterIP: None
