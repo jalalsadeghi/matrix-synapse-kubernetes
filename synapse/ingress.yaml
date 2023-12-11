@@ -2,7 +2,7 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: synapse-nginx
-  namespace: matrix-synapse
+  namespace: synapse
 spec:
   ingressClassName: nginx
   tls:
