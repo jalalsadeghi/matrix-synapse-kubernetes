@@ -2,7 +2,7 @@ apiVersion: v1
 kind: PersistentVolume
 metadata:
   name: postgres-pv
-  namespace: synapse
+  namespace: matrix-synapse
   labels:
     pvc_type: postgres-pv
 spec:
@@ -19,7 +19,7 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: postgres-pv-claim
-  namespace: synapse
+  namespace: matrix-synapse
 spec:
   storageClassName: manual
   accessModes:

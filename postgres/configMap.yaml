@@ -2,7 +2,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: postgres-configuration
-  namespace: synapse
+  namespace: matrix-synapse
   labels:
     app: postgres
 data: 
