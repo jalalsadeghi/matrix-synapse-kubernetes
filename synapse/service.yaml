@@ -8,10 +8,10 @@ metadata:
 spec:
   ports:
   - name: http
-    port: 80
+    port: 8008
     protocol: TCP
     targetPort: 80
   selector:
     app: synapse
-  type: LoadBalancer
+  type: NodePort
   # clusterIP: None
