@@ -28,6 +28,3 @@ spec:
   resources:
     requests:
       storage: 50Gi
-  # selector:
-  #   matchLabels:
-  #     pvc_type: synapse-pv

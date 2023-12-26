@@ -8,5 +8,5 @@ metadata:
 data: 
   POSTGRES_DB: synapse
   POSTGRES_USER: synapse-db
-  POSTGRES_PASSWORD: r#aTXS7Zfx$9wDr
+  POSTGRES_PASSWORD: {CHANGEME}
   POSTGRES_INITDB_ARGS: "--locale=C --encoding=UTF-8"

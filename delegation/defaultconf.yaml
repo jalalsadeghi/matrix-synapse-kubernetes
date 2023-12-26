@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: delegation-conf
+  namespace: synapse
+data:
+  default.conf: |
+    server {
+      listen       80;
+      location / {
+        return 200;
+      }
+      location /.well-known/matrix/server {
+        default_type application/json;
+        return 200 '{"m.server": "matrix.example.org:443"}';
+      }
+      location /.well-known/matrix/client {
+        default_type application/json;
+        return 200 '{"m.homeserver": { "base_url": "https://matrix.example.org" }}';
+      }
+    }

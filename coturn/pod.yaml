@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: turn-utils-pod
+  namespace: synapse
+spec:
+  containers:
+  - name: debug-container
+    image: spreed/turnserver:latest  # Replace with the image of your TURN server
+    command: ["/bin/sh"]
+    args: ["-c", "sleep infinity"]

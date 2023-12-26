@@ -28,6 +28,3 @@ spec:
   resources:
     requests:
       storage: 30Gi
-  # selector:
-  #   matchLabels:
-  #     pvc_type: postgres-pv

@@ -1,21 +1,21 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: synapse-nginx
+  name: coturn-ingress
   namespace: synapse
 spec:
   ingressClassName: nginx
   rules:
-  - host: matrix.example.org
+  - host: turn.example.org
     http:
       paths:
       - pathType: Prefix
         path: "/"
         backend:
           service:
-            name: synapse-service
+            name: coturn-service
             port:
-              number: 8008
+              number: 5349
   tls:
   - hosts:
-    - matrix.example.org
+    - turn.example.org

@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: coturn
+  namespace: synapse
+spec:
+  selector:
+    matchLabels:
+      app: coturn
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: coturn
+    spec:
+      hostNetwork: true
+      containers:
+        - image: dexxter1911/dynamic-coturn:latest
+          name: turn
+          env:
+          - name: TURN_CONFIG
+            value: /etc/coturn.conf
+          #CHECK_INTERVAL defines the interval seconds between IP checks.
+          - name: CHECK_INTERVAL
+            value: "500"
+          volumeMounts:
+          - name: cert
+            mountPath: /var/run/secret
+            readOnly: true
+          - name: conf
+            mountPath: /etc/coturn.conf
+            subPath: coturn.conf
+      volumes:
+      #In my case this is a wildcard certificate which automatically includes turn.example.com
+      - name: cert
+        secret:
+          secretName: turn.example.org
+      - name: conf
+        configMap:
+          name: coturn-conf
+          items:
+          - key: coturn.conf
+            path: coturn.conf
