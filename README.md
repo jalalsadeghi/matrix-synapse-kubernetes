@@ -11,9 +11,15 @@ In this repository we want to run a synapse matrix on kubernetes in the followin
     * [Setting up PostgreSQL](#setting-up-postgresql)
     * [Setting up Synapse](#setting-up-synapse)
     * [Setting up the Ingress](#setting-up-the-ingress)
+    * [Register new user](#register-new-user)
 - [Federation](#federation)
     * [Setting up delegation](#setting-up-delegation)
 - [Enable VoIP calls](#enable-voip-calls)
+    * [Generate a Self-Signed Certificate and Key](#generate-a-self-signed-certificate-and-key)
+    * [Setting up TURN](#setting-up-turn)
+    * [Synapse configuration for Turn](#synapse-configuration-for-turn)
+    * [Matrix VoIP Tester](#matrix-voip-tester)
+- [Sources](#sources)
 
 ### Requirements
 - Before starting, I have deployed a [Kubespray](https://github.com/kubernetes-sigs/kubespray) on two servers as master and worker. (You can use the Kubernetes you want)
@@ -177,6 +183,16 @@ You can navigate to `https://matrix.example.com`. You receive something like thi
 
 ![Matrix server](https://raw.githubusercontent.com/jalalsadeghi/matrix-synapse-kubernetes/main/2021-01-19_18-21.png)
 
+### Register new user
+First enter your Synapse Pod:
+```
+kubectl -n synapse exec -it {YourSynapsePod} -- /bin/bash
+```
+Register new user:
+```
+register_new_matrix_user -u {user} -p {password} -c /data/homeserver.yaml
+```
+
 ## Federation
 ### Setting up delegation
 We want to use `.well-known` to achieve delegation.
@@ -200,14 +216,49 @@ kubectl apply -f delegation/ingress.yaml
 ```
 If federation is correctly setup, can be tested with the [Federation Tester](https://federationtester.matrix.org/). 
 
+
 ## Enable VoIP calls
 for using voice / video calls on our Synapse server we need to Turnserver ([coturn](https://github.com/coturn/coturn) in this case) in Kubernetes, behind a dynamic IP.
-First apply ConfigMap
+
+### Generate a Self-Signed Certificate and Key
+First we need to Certificate and Key, we can use the openssl command to generate a self-signed certificate and key:
+```
+mkdir -p /var/run/secret
+openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /var/run/secret/tls.key -out /var/run/secret/tls.crt
+```
+### Setting up TURN
+Next apply ConfigMap:
 ```
 kubectl apply -f coturn/configMap.yaml
 ```
-### sources
-my sources for this repository are:
+Next the deployment itself.
+```
+kubectl apply -f coturn/deployment.yaml
+```
+### Synapse configuration for Turn
+Open your `homeserver.yaml` configuration file in an editor, and add the following config:
+```
+## TURN ##
+# The public URIs of the TURN server to give to clients
+turn_uris:
+  - "turns:turn.example.com?transport=tcp"
+  - "turns:turn.example.com?transport=udp"
+  - "turn:turn.example.com?transport=tcp"
+  - "turn:turn.example.com?transport=udp"
+
+# The shared secret used to compute passwords for the TURN server
+turn_shared_secret: "{{TheSecretYouSetInTheTurnConfigMap}}"
+
+# How long generated TURN credentials last
+turn_user_lifetime: 1h
+```
+### Matrix VoIP Tester
+You can try to test your homeserver's STUN/TURN configuration through [this site](https://test.voip.librepush.net/)
+
+
+
+### Sources
+My sources for this repository are:
 - [Introduction to NGINX Ingress Controller](https://github.com/marcel-dempers/docker-development-youtube-series/blob/master/kubernetes/ingress/controller/nginx/README.md)
 - [Installing a Matrix Synapse server on Kubernetes](https://nonedhudla.xyz/installing-synapse-on-kubernetes/)
 - [Enable VoIP calls for Matrix Synapse on Kubernetes](https://nonedhudla.xyz/enabling-voip-calls-in-synapse/)
