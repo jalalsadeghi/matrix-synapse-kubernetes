@@ -1,17 +1,30 @@
-# matrix-synapse
-Matrix is an open source protocol for decentralised, secure communications. Synapse is an open-source Matrix homeserver developed from 2019 as part of the Matrix.org Foundation. 
-In this repository I want to run a synapse matrix on kubernetes.
+# Matrix Synapse server on Kubernetes
+Synapse is the reference implementation of the Matrix protocol, a decentralized communication standard for instant messaging and VoIP. It serves as the server software for the Matrix communication network, allowing users to communicate seamlessly across different platforms and services in a federated and open manner. Synapse supports end-to-end encryption, user authentication, and the storage and retrieval of messages in a distributed and secure way.
+
+In this repository we want to run a synapse matrix on kubernetes in the following part.
+- [Requirements](#requirements)
+- [Install some tools](#install-some-tools)
+    * [Install helm](#install-helm)
+    * [Install NGINX Ingress Controller](#install-nginx-ingress-controller)
+- [Deploy a Matrix](#deploy-a-matrix) 
+    * [Namespace](#namespace)
+    * [Setting up PostgreSQL](#setting-up-postgresql)
+    * [Setting up Synapse](#setting-up-synapse)
+    * [Setting up the Ingress](#setting-up-the-ingress)
+- [Federation](#federation)
+    * [Setting up delegation](#setting-up-delegation)
+- [Enable VoIP calls](#enable-voip-calls)
 
 ### Requirements
 - Before starting, I have deployed a [Kubespray](https://github.com/kubernetes-sigs/kubespray) on two servers as master and worker. (You can use the Kubernetes you want)
 - we assuming, we've set up a domain and two subdomains for the Synapse service.
-    - domain: example.com
-    - subdomains: matrix, turn
+    * domain: example.com
+    * subdomains: matrix, turn
 - Basic Knowledge about Kubernetes and Linux itself
 
-## install some tools
+## Install some tools
 
-### install helm 
+### Install helm 
 ```
 curl -o /tmp/helm.tar.gz -LO https://get.helm.sh/helm-v3.10.1-linux-amd64.tar.gz
 tar -C /tmp/ -zxvf /tmp/helm.tar.gz
@@ -163,3 +176,38 @@ kubectl apply -f synapse/ingress.yaml
 You can navigate to `https://matrix.example.com`. You receive something like this.
 
 ![Matrix server](https://raw.githubusercontent.com/jalalsadeghi/matrix-synapse-kubernetes/main/2021-01-19_18-21.png)
+
+## Federation
+### Setting up delegation
+We want to use `.well-known` to achieve delegation.
+When using .well-known another Homeserver will make an HTTPS request to `https://{synapse_server_name}/.well-known/matrix/server.` Which will return the actual domain and port of your homeserver. The same goes for clients except they request `https://{synapse_server_name}/.well-known/matrix/client.`
+
+Note: Before apply 'default.conf', adjust the domain matrix.example.com to the domain Synapse is served through.
+```
+kubectl apply -f delegation/defaultconf.yaml
+```
+Apply deployment.
+```
+kubectl apply -f delegation/deployment.yaml
+```
+Apply service.
+```
+kubectl apply -f delegation/service.yaml
+```
+Apply ingress.
+```
+kubectl apply -f delegation/ingress.yaml
+```
+If federation is correctly setup, can be tested with the [Federation Tester](https://federationtester.matrix.org/). 
+
+## Enable VoIP calls
+for using voice / video calls on our Synapse server we need to Turnserver ([coturn](https://github.com/coturn/coturn) in this case) in Kubernetes, behind a dynamic IP.
+First apply ConfigMap
+```
+kubectl apply -f coturn/configMap.yaml
+```
+### sources
+my sources for this repository are:
+- [Introduction to NGINX Ingress Controller](https://github.com/marcel-dempers/docker-development-youtube-series/blob/master/kubernetes/ingress/controller/nginx/README.md)
+- [Installing a Matrix Synapse server on Kubernetes](https://nonedhudla.xyz/installing-synapse-on-kubernetes/)
+- [Enable VoIP calls for Matrix Synapse on Kubernetes](https://nonedhudla.xyz/enabling-voip-calls-in-synapse/)
