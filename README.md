@@ -37,6 +37,12 @@ tar -C /tmp/ -zxvf /tmp/helm.tar.gz
 mv /tmp/linux-amd64/helm /usr/local/bin/helm
 chmod +x /usr/local/bin/helm
 ```
+check helm version
+```
+helm version
+version.BuildInfo{Version:"v3.10.1", GitCommit:"9f88ccb6aee40b9a0535fcc7efea6055e1ef72c9", GitTreeState:"clean", GoVersion:"go1.18.7"}
+
+```
 ### Install NGINX Ingress Controller
 The controller ships as a helm chart, I grab version 1.9.5 as per the compatibility matrix.
 ```
